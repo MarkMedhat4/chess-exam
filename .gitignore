@@ -1,0 +1,13 @@
+# Real Apps Script URL / config lives here locally — never commit it.
+# Checked-in template: js/config.example.js
+js/config.js
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Vercel
+.vercel/

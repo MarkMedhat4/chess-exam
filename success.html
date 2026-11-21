@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تم التسليم بنجاح | امتحان الشطرنج</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>♟️</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="page">
+  <header class="site-header">
+    <div class="container site-header__row">
+      <div class="brand"><span class="brand__mark" aria-hidden="true">♟️</span> أكاديمية الشطرنج الصغيرة</div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container">
+      <div class="card success-hero" style="max-width:560px;margin-inline:auto;">
+        <div class="success-hero__mark" aria-hidden="true">🎉</div>
+        <h1 class="h1">تم تسليم امتحانك بنجاح!</h1>
+        <p class="lede" style="margin-block:var(--space-4);">
+          برافو عليك يا بطل!<br />
+          إجاباتك وصلت، وهنراجعها ونتواصل معاك بالنتيجة.
+        </p>
+        <div class="exam-id-chip ltr-content" id="exam-id-chip">—</div>
+        <p class="h3" style="margin-block:var(--space-5);">بالتوفيق يا بطل الشطرنج! ♟️</p>
+        <a href="index.html" class="btn btn--secondary" id="new-exam-link">تسجيل طالب جديد</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">امتحان الشطرنج للأطفال</div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    (function () {
+      var record = ChessExamApp.getSubmissionRecord();
+      if (!record) {
+        // Nobody submitted anything in this browser session — send them
+        // back to registration rather than show a blank success page.
+        window.location.replace('index.html');
+        return;
+      }
+      document.getElementById('exam-id-chip').textContent = 'رقم الامتحان: ' + record.examId;
+    })();
+  </script>
+</body>
+</html>

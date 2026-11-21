@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>امتحان الشطرنج للأطفال</title>
+  <meta name="description" content="امتحان مقالي في مبادئ الشطرنج — ١٠ أسئلة في ٣٠ دقيقة." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>♟️</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="page">
+  <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
+
+  <!-- Sticky exam top bar: hidden on the instructions screen -->
+  <header class="exam-topbar hidden" id="exam-topbar">
+    <div class="container exam-topbar__row">
+      <span class="exam-topbar__student" id="topbar-student-name">—</span>
+      <span class="text-muted" id="topbar-progress">السؤال 1 من 10</span>
+      <span class="timer-badge" id="timer-badge" role="timer">
+        <span aria-hidden="true">⏱️</span><span id="timer-display" class="ltr-content">30:00</span>
+      </span>
+      <span class="sr-only" aria-live="assertive" id="timer-announcer"></span>
+    </div>
+    <div class="container" style="margin-block-start:var(--space-2);">
+      <div class="progress-track" role="progressbar" aria-label="تقدّم الامتحان" aria-valuemin="0" aria-valuemax="100" id="progress-track" aria-valuenow="0">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container">
+
+      <!-- ===================== Screen 1: Instructions ===================== -->
+      <section id="screen-instructions" class="card" style="max-width:640px;margin-inline:auto;">
+        <h1 class="h1 text-center">أهلاً بيك في امتحان الشطرنج! ♟️</h1>
+        <p class="lede" style="margin-block:var(--space-5);line-height:1.9;">
+          اقرأ كل سؤال كويس، وفكر قبل ما تجاوب.
+        </p>
+        <ul class="stack" style="margin-block-end:var(--space-6);">
+          <li>📝 الامتحان مكوّن من <strong>10 أسئلة</strong>.</li>
+          <li>✍️ جميع الأسئلة <strong>مقالية</strong>.</li>
+          <li>🖊️ اكتب إجابتك بنفسك.</li>
+          <li>🔎 راجع إجاباتك قبل التسليم.</li>
+          <li>💪 حاول تجاوب على جميع الأسئلة.</li>
+          <li>⏱️ عندك <strong id="instructions-duration">30</strong> دقيقة من لحظة ما تبدأ.</li>
+        </ul>
+        <p class="h3 text-center" style="margin-block-end:var(--space-6);">بالتوفيق يا بطل! 🏆</p>
+        <button type="button" class="btn btn--primary btn--block btn--lg" id="begin-exam-btn">
+          ابدأ حل الامتحان
+        </button>
+      </section>
+
+      <!-- ===================== Screen 2: Exam questions ===================== -->
+      <section id="screen-exam" class="hidden">
+        <div class="card" style="max-width:720px;margin-inline:auto;">
+          <div class="dot-tracker" id="dot-tracker" role="tablist" aria-label="أسئلة الامتحان"></div>
+
+          <div class="question-card" id="question-card">
+            <span class="question-card__eyebrow" id="question-eyebrow">السؤال 1 من 10</span>
+            <p class="question-card__text" id="question-text"></p>
+
+            <div class="field" style="margin-block-end:var(--space-2);">
+              <label for="answer-textarea" class="sr-only">إجابتك</label>
+              <textarea
+                id="answer-textarea"
+                placeholder="اكتب إجابتك هنا..."
+                aria-describedby="char-count"
+              ></textarea>
+            </div>
+            <p class="char-count" id="char-count">0 حرف</p>
+          </div>
+
+          <div class="btn-row" style="margin-block-start:var(--space-6);justify-content:space-between;">
+            <button type="button" class="btn btn--secondary" id="prev-btn">السؤال السابق</button>
+            <div class="btn-row">
+              <button type="button" class="btn btn--ghost" id="review-link-btn">مراجعة الإجابات</button>
+              <button type="button" class="btn btn--primary" id="next-btn">السؤال التالي</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Screen 3: Review ===================== -->
+      <section id="screen-review" class="hidden">
+        <div class="card" style="max-width:720px;margin-inline:auto;">
+          <h2 class="h2" style="margin-block-end:var(--space-2);">مراجعة إجاباتك</h2>
+          <p class="text-muted" style="margin-block-end:var(--space-5);">اضغط على أي سؤال عشان تعدّل إجابتك.</p>
+
+          <div id="unanswered-alert" class="alert alert--warning hidden" role="alert"></div>
+
+          <div id="review-list"></div>
+
+          <div class="btn-row" style="margin-block-start:var(--space-6);justify-content:space-between;">
+            <button type="button" class="btn btn--secondary" id="back-to-questions-btn">الرجوع للأسئلة</button>
+            <button type="button" class="btn btn--primary btn--lg" id="submit-exam-btn">تسليم الامتحان</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">امتحان الشطرنج للأطفال</div>
+  </footer>
+
+  <!-- Submission confirmation modal -->
+  <div class="modal-overlay hidden" id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="modal">
+      <h2 class="h2" id="confirm-title">تأكيد التسليم</h2>
+      <p>هل أنت متأكد إنك عايز تسلّم الامتحان؟<br />تأكد إنك جاوبت على جميع الأسئلة قبل التسليم.</p>
+      <div class="btn-row">
+        <button type="button" class="btn btn--secondary" id="modal-review-btn">مراجعة الإجابات</button>
+        <button type="button" class="btn btn--primary" id="modal-submit-btn">تسليم الامتحان</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast hidden" id="toast"><div class="toast__inner" id="toast-text"></div></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/exam.js"></script>
+</body>
+</html>
